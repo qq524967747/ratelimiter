@@ -1,4 +1,4 @@
-package ratelimiter
+package pkg
 
 var GB = int64(1024 * 1024 * 1024)
 var MB = int64(1024 * 1024)

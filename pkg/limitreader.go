@@ -1,4 +1,4 @@
-package ratelimiter
+package pkg
 
 import (
 	"crypto/md5"
