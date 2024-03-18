@@ -1,17 +1,16 @@
-package main
+package ratelimiter
 
 import (
 	"io"
 	"log"
 	"os"
+	"testing"
 	"time"
 
 	"github.com/gin-gonic/gin"
-
-	"github.com/qq524967747/ratelimiter/pkg"
 )
 
-func main() {
+func TestGin(t *testing.T) {
 	app := gin.New()
 	app.GET("", copy)
 	app.Run(":8080")
@@ -24,9 +23,9 @@ func copy(c *gin.Context) {
 	}
 	defer f.Close()
 	// 适当调整buf和rate速率
-	buf := make([]byte, 1*pkg.KB)
-	TotalLimit := pkg.NewRateLimiter(pkg.TransRate(1*pkg.KB), 2)
-	limitReader := pkg.NewLimitReaderWithLimiter(TotalLimit, f, false)
+	buf := make([]byte, 1*KB)
+	TotalLimit := NewRateLimiter(TransRate(1*KB), 2)
+	limitReader := NewLimitReaderWithLimiter(TotalLimit, f, false)
 	start := time.Now()
 	_, copyErr := io.CopyBuffer(c.Writer, limitReader, buf)
 	if copyErr != nil {
