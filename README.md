@@ -14,6 +14,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+
+	"github.com/qq524967747/ratelimiter"
 )
 
 func main() {
@@ -29,9 +31,9 @@ func copy(c *gin.Context) {
 	}
 	defer f.Close()
 	// 适当调整buf和rate速率
-	buf := make([]byte, 1*KB)
-	TotalLimit := NewRateLimiter(TransRate(1*KB), 2)
-	limitReader := NewLimitReaderWithLimiter(TotalLimit, f, false)
+	buf := make([]byte, 100*ratelimiter.KB)
+	TotalLimit := ratelimiter.NewRateLimiter(ratelimiter.TransRate(100*ratelimiter.KB), 2)
+	limitReader := ratelimiter.NewLimitReaderWithLimiter(TotalLimit, f, false)
 	start := time.Now()
 	_, copyErr := io.CopyBuffer(c.Writer, limitReader, buf)
 	if copyErr != nil {
