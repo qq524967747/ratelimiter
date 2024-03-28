@@ -1,5 +1,8 @@
 package ratelimiter
 
-var GB = int64(1024 * 1024 * 1024)
-var MB = int64(1024 * 1024)
-var KB = int64(1024)
+var PB = 1024 * TB
+var TB = 1024 * GB
+var GB = 1024 * MB
+var MB = 1024 * KB
+var KB = 1024 * B
+var B = int64(1)
